@@ -1,0 +1,32 @@
+name: Setup LayaAir CLI
+description: Install, cache, and enable the LayaAir CLI on GitHub Actions runners.
+author: Geequlim
+
+inputs:
+  version:
+    description: LayaAir CLI runtime version to install. Empty or latest installs the latest runtime.
+    required: false
+    default: latest
+  install-dir:
+    description: Custom LayaAir CLI install directory.
+    required: false
+  cache:
+    description: Restore and save the installed LayaAir CLI directory.
+    required: false
+    default: "true"
+  check-latest:
+    description: For latest installs, skip stale cache entries and re-check the official installer flow.
+    required: false
+    default: "false"
+
+outputs:
+  version:
+    description: Actual LayaAir CLI version reported after setup.
+  install-dir:
+    description: Directory containing the LayaAir CLI executable and added to PATH.
+  cache-hit:
+    description: Whether an installation was restored from cache.
+
+runs:
+  using: node20
+  main: dist/index.js
