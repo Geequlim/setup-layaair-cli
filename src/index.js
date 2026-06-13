@@ -79,13 +79,16 @@ async function installCommandEntry(installDir) {
   const installerPath = await tc.downloadTool(installerUrl);
 
   if (process.platform === "win32") {
+    const scriptPath = `${installerPath}.ps1`;
+    await fs.promises.copyFile(installerPath, scriptPath);
+
     await exec.exec("powershell", [
       "-NoLogo",
       "-NoProfile",
       "-ExecutionPolicy",
       "Bypass",
       "-File",
-      installerPath
+      scriptPath
     ], {
       env: {
         ...process.env,
