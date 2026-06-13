@@ -90286,8 +90286,10 @@ function randomUUID() {
 const os = __nccwpck_require__(48161);
 const path = __nccwpck_require__(76760);
 
-const INSTALLER_BASE_URL =
-  "https://raw.githubusercontent.com/layabox/layaair-cli/master";
+const INSTALLER_URLS = {
+  unix: "https://ldc-1251285021.file.myqcloud.com/layaair3/install.sh",
+  win32: "https://ldc-1251285021.file.myqcloud.com/layaair3/install.ps1"
+};
 
 function parseBoolean(value, defaultValue) {
   if (value === undefined || value === null || value === "") {
@@ -90325,7 +90327,7 @@ function getExecutableName(platform = process.platform) {
 }
 
 function getInstallerUrl(platform = process.platform) {
-  return `${INSTALLER_BASE_URL}/${platform === "win32" ? "install.ps1" : "install.sh"}`;
+  return platform === "win32" ? INSTALLER_URLS.win32 : INSTALLER_URLS.unix;
 }
 
 function getCacheKey({ version, platform = process.platform, arch = process.arch }) {
