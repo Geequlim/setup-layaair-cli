@@ -18,10 +18,17 @@ jobs:
       - run: npm run build
 
   smoke:
+    if: ${{ matrix.always-run || github.repository == 'Geequlim/setup-layaair-cli' }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            always-run: true
+          - os: macos-latest
+            always-run: false
+          - os: windows-latest
+            always-run: false
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
