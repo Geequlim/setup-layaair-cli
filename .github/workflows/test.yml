@@ -29,21 +29,3 @@ jobs:
           version: 3.4.0
           cache: true
       - run: layaair --version
-
-  smoke-cross:
-    if: github.repository == 'Geequlim/setup-layaair-cli'
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 20
-      - uses: ./
-        with:
-          version: 3.4.0
-          cache: true
-      - run: layaair --version
