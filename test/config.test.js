@@ -59,9 +59,9 @@ test("selects installer and executable names per platform", () => {
   assert.match(getInstallerUrl("darwin"), /install\.sh$/);
 });
 
-test("uses tool cache for default install directory", () => {
-  const dir = defaultInstallDir("3.4.0", { RUNNER_TOOL_CACHE: "/tmp/tools" }, "linux");
-  assert.match(dir, /^\/tmp\/tools\/layaair-cli\/3\.4\.0\/linux\//);
+test("uses runner temp rather than the shared tool cache for default installation", () => {
+  const dir = defaultInstallDir("3.4.0", { RUNNER_TEMP: "/tmp/job", RUNNER_TOOL_CACHE: "/tmp/tools" }, "linux");
+  assert.match(dir, /^\/tmp\/job\/layaair-cli\/3\.4\.0\/linux\//);
 });
 
 test("requires Node.js 20 or later", () => {

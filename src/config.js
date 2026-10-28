@@ -34,7 +34,7 @@ function isLatestVersion(version) {
 }
 
 function defaultInstallDir(version, env = process.env, platform = process.platform) {
-  const cacheRoot = env.RUNNER_TOOL_CACHE || path.join(os.homedir(), ".cache", "setup-layaair-cli");
+  const cacheRoot = env.RUNNER_TEMP || os.tmpdir();
   const versionPart = isLatestVersion(version) ? "latest" : version;
   return path.join(cacheRoot, "layaair-cli", versionPart, platform, process.arch);
 }

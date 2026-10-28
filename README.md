@@ -59,7 +59,7 @@ For `latest`, cached installs can become stale as upstream releases change. Set 
     install-dir: ${{ runner.temp }}/layaair
 ```
 
-When `install-dir` is omitted, the action installs under the runner tool cache when available, and falls back to a directory under the user's home directory.
+When `install-dir` is omitted, the action installs under the runner's temporary directory, falling back to the system temporary directory. The Actions cache service still restores and saves the installation across jobs.
 
 ## Inputs
 
