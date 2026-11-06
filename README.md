@@ -14,7 +14,7 @@ steps:
     with:
       node-version: 20
 
-  - uses: Geequlim/setup-layaair-cli@v1
+  - uses: Geequlim/setup-layaair-cli@v2
     with:
       version: 3.4.0
 
@@ -26,7 +26,7 @@ steps:
 Pinning `version` is recommended for CI because it keeps workflow results reproducible and enables stable cache keys.
 
 ```yaml
-- uses: Geequlim/setup-layaair-cli@v1
+- uses: Geequlim/setup-layaair-cli@v2
   with:
     version: 3.4.0
     cache: true
@@ -37,7 +37,7 @@ Pinning `version` is recommended for CI because it keeps workflow results reprod
 If `version` is omitted or set to `latest`, the action installs the latest LayaAir CLI runtime reported by the official installer flow.
 
 ```yaml
-- uses: Geequlim/setup-layaair-cli@v1
+- uses: Geequlim/setup-layaair-cli@v2
   with:
     cache: true
 ```
@@ -45,7 +45,7 @@ If `version` is omitted or set to `latest`, the action installs the latest LayaA
 For `latest`, cached installs can become stale as upstream releases change. Set `check-latest: true` to skip the old cache and force a fresh install check.
 
 ```yaml
-- uses: Geequlim/setup-layaair-cli@v1
+- uses: Geequlim/setup-layaair-cli@v2
   with:
     check-latest: true
 ```
@@ -53,7 +53,7 @@ For `latest`, cached installs can become stale as upstream releases change. Set 
 ## Custom Install Directory
 
 ```yaml
-- uses: Geequlim/setup-layaair-cli@v1
+- uses: Geequlim/setup-layaair-cli@v2
   with:
     version: 3.4.0
     install-dir: ${{ runner.temp }}/layaair
@@ -101,7 +101,7 @@ Recommended release flow:
 2. Run `npm test`.
 3. Run `npm run build`.
 4. Commit source changes and the updated `dist/index.js`.
-5. Create or move a major tag such as `v1` for workflow users.
+5. Create or move a major tag such as `v2` for workflow users.
 
 ## Development
 
