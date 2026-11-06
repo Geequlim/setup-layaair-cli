@@ -90368,6 +90368,7 @@ module.exports = {
 
 
 const fs = __nccwpck_require__(73024);
+const os = __nccwpck_require__(48161);
 const path = __nccwpck_require__(76760);
 
 const cache = __nccwpck_require__(5116);
@@ -90465,12 +90466,19 @@ async function installCommandEntry(installDir) {
     return;
   }
 
-  await exec.exec("bash", [installerPath], {
-    env: {
-      ...process.env,
-      LAYAAIR_INSTALL_DIR: installDir
-    }
-  });
+  // 安装器会修改已有的 shell 配置；Action 自己负责设置 PATH。
+  const installerHome = await fs.promises.mkdtemp(path.join(os.tmpdir(), "layaair-installer-"));
+  try {
+    await exec.exec("bash", [installerPath], {
+      env: {
+        ...process.env,
+        HOME: installerHome,
+        LAYAAIR_INSTALL_DIR: installDir
+      }
+    });
+  } finally {
+    await fs.promises.rm(installerHome, { recursive: true, force: true });
+  }
 }
 
 async function installRuntime(layaairPath, version) {

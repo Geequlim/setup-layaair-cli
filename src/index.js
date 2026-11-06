@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 
 const cache = require("@actions/cache");
@@ -98,12 +99,19 @@ async function installCommandEntry(installDir) {
     return;
   }
 
-  await exec.exec("bash", [installerPath], {
-    env: {
-      ...process.env,
-      LAYAAIR_INSTALL_DIR: installDir
-    }
-  });
+  // 安装器会修改已有的 shell 配置；Action 自己负责设置 PATH。
+  const installerHome = await fs.promises.mkdtemp(path.join(os.tmpdir(), "layaair-installer-"));
+  try {
+    await exec.exec("bash", [installerPath], {
+      env: {
+        ...process.env,
+        HOME: installerHome,
+        LAYAAIR_INSTALL_DIR: installDir
+      }
+    });
+  } finally {
+    await fs.promises.rm(installerHome, { recursive: true, force: true });
+  }
 }
 
 async function installRuntime(layaairPath, version) {
